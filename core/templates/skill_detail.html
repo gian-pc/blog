@@ -1,0 +1,15 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% load static %}
+    <div class="main-wrapper">
+    <article class="about-section py-5">
+    <div class="container">
+        <h3 class="mt-5 mb-3">{{ski.skill}}</h3>
+        <p>{{ ski.descripcion }}</p>
+        <div class="embed-responsive embed-responsive-16by9">
+            <iframe width="560" height="315" src={{ ski.video }} frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+    </div>
+        </article>
+    </div>
+{% endblock %}

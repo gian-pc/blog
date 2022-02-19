@@ -1,0 +1,66 @@
+{% extends 'base/base.html' %}
+{% block content %}
+{% load static %}
+    
+    <div class="main-wrapper">
+	    <section class="cta-section theme-bg-light py-5">
+		    <div class="container text-center">
+			    <h2 class="heading">The Skills</h2>
+			    <div class="intro">Welcome to my blog. Subscribe and get my latest blog post in your inbox.</div>
+			    <form class="signup-form form-inline justify-content-center pt-3" action="{% url 'core:skill_search'  %}">
+                    <div class="form-group">
+                        <input class="form-control mr-sm-2"   name="q" type="search" placeholder="Search" aria-label="Search">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+		    </div><!--//container-->
+	    </section>
+	    <section class="blog-list px-3 py-5 p-md-5">
+		    <div class="container">
+
+                {% for item in ski %}
+			    <div class="item mb-5">
+				    <div class="media">
+					    <img class="mr-3 img-fluid post-thumb d-none d-md-flex" src={{ item.imagen }} alt="image">
+					    <div class="media-body">
+						    <h3 class="title mb-1"><a href="{% url 'core:skill_detail' item.codigo %}">{{item.skill}}</a></h3>
+
+                            {% with ''|center:item.nivel as cantidad %}
+                                {% for _ in cantidad %}
+                                    {{ '⭐' }}
+                                {% endfor %}
+                            {% endwith %}
+
+						    <div class="intro"><p align="justify"> {{ item.descripcion|truncatechars:250 }}</p></div>
+						    <a class="more-link" href="{% url 'core:skill_detail' item.codigo %}">Leer Más &rarr;</a>
+					    </div><!--//media-body-->
+				    </div><!--//media-->
+			    </div><!--//item-->
+
+                {% empty %}
+                    <h2>No hay Skills que mostrar</h2>
+                {% endfor %}
+
+
+            {% if ski|length > 0 %}
+                {% if ski.has_next %}
+                    <nav class="blog-nav nav nav-justified my-5">
+
+                      <a class="nav-link-next nav-item nav-link rounded" href="?page={{ ski.next_page_number }}">Next<i class="arrow-next fas fa-long-arrow-alt-right"></i></a>
+                    </nav>
+                {% endif %}
+
+                {% if ski.has_previous %}
+                    <nav class="blog-nav nav nav-justified my-5">
+
+                      <a class="nav-link-next nav-item nav-link rounded" href="?page={{ ski.previous_page_number }}">Previous<i class="arrow-next fas fa-long-arrow-alt-left"></i></a>
+                    </nav>
+                {% endif %}
+
+            {% endif %}
+
+				
+		    </div>
+	    </section>
+	</div>
+{% endblock %}
